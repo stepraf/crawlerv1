@@ -15,7 +15,7 @@ from langgraph.graph import StateGraph, END
 load_dotenv()
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-5.1")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-5.1-mini")
 
 llm = ChatOpenAI(api_key=OPENAI_API_KEY, model=OPENAI_MODEL, temperature=1)
 
