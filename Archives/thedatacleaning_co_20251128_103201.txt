@@ -1,0 +1,84 @@
+[@@@]: http://thedatacleaning.co
+
+[ The Data Cleaning Co. ](https://thedatacleaning.co/en/)
+Menu Open Menu Close
+  * [Home](https://thedatacleaning.co/en/)
+  * [Contact](https://thedatacleaning.co/en/#contact)
+  * [ Get in Touch ](https://thedatacleaning.co/en/#contact)
+
+
+En  Fr 
+theme switcher
+[ Get in Touch ](https://thedatacleaning.co/en/#contact)
+#  Data Cleaning, Transformation & Supervised Fine-Tuning Datasets. 
+We clean, reshape, and modernize enterprise data for digital transformation and AI adoption. Our services include advanced harmonization, re-granularization, interoperability modeling, and the creation of supervised fine-tuning datasets that encode your business processes and domain expertise. 
+[ Get in Touch ](https://thedatacleaning.co/#contact)
+##  Why Clean, Structured Data Matters 
+Most digital transformation and AI projects fail due to fragmented, inconsistent, or outdated information. We fix that by delivering clear, reliable, migration-ready data you can trust. 
+##  Data Transformation for Modern Tools 
+We adapt your data to new platforms and tools — from re-structuring and re-granularization to full schema redesign. Your information becomes interoperable and ready for ERPs, CRMs, cloud services, analytics platforms, and AI systems. 
+##  Supervised Fine-Tuning Dataset Creation 
+We build high-quality supervised datasets designed for fine-tuning LLMs and AI models. Whether based on your documents, workflows, or domain knowledge, we produce structured, balanced, high-trust training data. 
+##  AI-Powered, Traceable Data Preparation 
+Our proprietary AI-based software automates transformation, matching, enrichment, and validation — with full auditability for every operation. 
+##  From Dirty Data to Deployable Insights 
+We don’t just clean your data — we prepare it for real use. The results are reliable datasets ready for analytics, operations, automation, and AI. 
+##  The Data Cleaning Co. Advantage 
+##  What Our Clients Say 
+Don’t just take our word for it - hear from some of our satisfied clients! 
+> We used their document-to-dataset extraction for contract analysis — it saved us months of manual work. 
+![Marc L.](https://thedatacleaning.co/images/avatar-sm.png)
+###  Marc L. 
+Head of Data Science, Lyon 
+> Finally, a data cleaning company that understands both technology and compliance. Everything stayed local and GDPR-safe. 
+![Isabelle R.](https://thedatacleaning.co/images/avatar-sm.png)
+###  Isabelle R. 
+CIO, Toulouse 
+> Our ERP migration succeeded because our data was harmonized and fully auditable — thanks to The Data Cleaning Co. 
+![Antoine B.](https://thedatacleaning.co/images/avatar-sm.png)
+###  Antoine B. 
+Digital Transformation Lead, Lille 
+> The Data Cleaning Co. helped us clean and migrate over 10 million records in just weeks. Their audit trail and local AI setup gave us total confidence. 
+![Sophie D.](https://thedatacleaning.co/images/avatar-sm.png)
+###  Sophie D. 
+Chief Data Officer, Paris 
+> We used their document-to-dataset extraction for contract analysis — it saved us months of manual work. 
+![Marc L.](https://thedatacleaning.co/images/avatar-sm.png)
+###  Marc L. 
+Head of Data Science, Lyon 
+> Finally, a data cleaning company that understands both technology and compliance. Everything stayed local and GDPR-safe. 
+![Isabelle R.](https://thedatacleaning.co/images/avatar-sm.png)
+###  Isabelle R. 
+CIO, Toulouse 
+> Our ERP migration succeeded because our data was harmonized and fully auditable — thanks to The Data Cleaning Co. 
+![Antoine B.](https://thedatacleaning.co/images/avatar-sm.png)
+###  Antoine B. 
+Digital Transformation Lead, Lille 
+> The Data Cleaning Co. helped us clean and migrate over 10 million records in just weeks. Their audit trail and local AI setup gave us total confidence. 
+![Sophie D.](https://thedatacleaning.co/images/avatar-sm.png)
+###  Sophie D. 
+Chief Data Officer, Paris 
+> We used their document-to-dataset extraction for contract analysis — it saved us months of manual work. 
+![Marc L.](https://thedatacleaning.co/images/avatar-sm.png)
+###  Marc L. 
+Head of Data Science, Lyon 
+> Finally, a data cleaning company that understands both technology and compliance. Everything stayed local and GDPR-safe. 
+![Isabelle R.](https://thedatacleaning.co/images/avatar-sm.png)
+###  Isabelle R. 
+CIO, Toulouse 
+## Ready to Improve Your Data?
+Whether you’re modernizing your systems or training AI models, we make sure your data is reliable, structured, and ready for what comes next.
+## Get in Touch with The Data Cleaning Co.
+Ready to transform your data? Contact us today.
+Full Name *
+Email *
+Company 
+Message *
+Send Message
+[ The Data Cleaning Co. ](https://thedatacleaning.co/en/)
+© 2025 - The Data Cleaning Co. All rights reserved. 
+
+
+---
+
+[@@@]: http://thedatacleaning.co/en/

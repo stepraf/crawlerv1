@@ -1,0 +1,56 @@
+__pycache__/
+*.py[cod]
+<<<<<<< HEAD
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Local environment files (never commit real secrets)
+.env
+.env.*
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# IDE / editor
+.vscode/
+.idea/
+*.code-workspace
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Logs / misc
+*.log
+
+# SQLite / databases (ignored)
+*.db
+
+# CSV data exports (keep only ones you explicitly un-ignore)
+*.csv
+!requirements.txt
+=======
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment variables
+.env
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+>>>>>>> a7746450 (Add .gitignore to ignore env and venv)
+
+

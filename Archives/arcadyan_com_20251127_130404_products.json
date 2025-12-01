@@ -1,0 +1,433 @@
+{
+  "source_file": "arcadyan_com_20251127_130404.txt",
+  "total_chunks": 1,
+  "total_products_found": 14,
+  "chunk_results": [
+    {
+      "products": [
+        {
+          "name": "5G CPE",
+          "category": "5G Customer Premises Equipment / Integrated Access Device (IAD)",
+          "characteristics": [
+            "Uses 5G New Radio (5G NR) mobile network access",
+            "High-speed, low-latency home integrated access device",
+            "Optimized wireless communication performance",
+            "Provides larger bandwidth and high-speed Ethernet interfaces",
+            "Designed to deliver optimized user experience"
+          ],
+          "specifications": {
+            "interface_type": "IAD (Integrated Access Device)",
+            "wireless_standard": "5G New Radio",
+            "features": "high-speed, low-latency, optimized wireless performance, high-speed Ethernet"
+          }
+        },
+        {
+          "name": "Small Cell",
+          "category": "5G / Small Cell (Open RAN)",
+          "characteristics": [
+            "Built on Open RAN architecture",
+            "Improves indoor/outdoor signal coverage and network capacity",
+            "Designed to enhance customer experience and application performance"
+          ],
+          "specifications": {
+            "architecture": "Open RAN"
+          }
+        },
+        {
+          "name": "FTTx Solution",
+          "category": "Fixed broadband access solutions (FTTx)",
+          "characteristics": [
+            "Provides fiber access solutions for high-speed fixed networks",
+            "Customizable per customer/operator needs to reduce OPEX",
+            "Supports a variety of FTTx technologies"
+          ],
+          "specifications": {
+            "supported_standards": "GPON, XGPON, XGSPON, 10GEPON, NGPON2"
+          }
+        },
+        {
+          "name": "DOCSIS Cable CPE (modem / EMTA / all-in-one Cable Gateway)",
+          "category": "Cable broadband CPE (DOCSIS)",
+          "characteristics": [
+            "Complete DOCSIS 3.0 / 3.1 Cable CPE solutions",
+            "Includes DOCSIS modem, EMTA and all-in-one Cable Gateway variants",
+            "Built-in EasyMesh and cloud analytics",
+            "Integrates latest wireless technologies for home/multi-media use",
+            "Targets multi-gigabit household and SMB multimedia/high-bandwidth applications"
+          ],
+          "specifications": {
+            "docsis_versions": "3.0, 3.1",
+            "ethernet": "up to 2.5 Gbps Ethernet (multi-gigabit capable)",
+            "features": "EasyMesh, cloud analytics, latest wireless tech"
+          }
+        },
+        {
+          "name": "xDSL Integrated Access Device (xDSL IAD)",
+          "category": "xDSL home broadband equipment",
+          "characteristics": [
+            "xDSL access via telephone line",
+            "Integrates Wi‑Fi wireless networking and VoIP",
+            "Offers full-series xDSL integrated access devices for operators"
+          ],
+          "specifications": {
+            "access_technology": "xDSL",
+            "integrations": "Wi‑Fi, VoIP"
+          }
+        },
+        {
+          "name": "Wi‑Fi CPE",
+          "category": "Home Wi‑Fi Customer Premises Equipment",
+          "characteristics": [
+            "Long-term R&D focus on wireless communications",
+            "Leader in home broadband Wi‑Fi CPE",
+            "Integrates wireless and 10 Gbps Ethernet",
+            "Provides multi-gigabit high-speed broadband for multimedia and high-bandwidth applications"
+          ],
+          "specifications": {
+            "ethernet": "10 Gbps Ethernet integration (where applicable)",
+            "capability": "multi-gigabit Wi‑Fi"
+          }
+        },
+        {
+          "name": "Wi‑Fi Extender (Mesh / EasyMesh)",
+          "category": "Wi‑Fi Extender / Mesh solution",
+          "characteristics": [
+            "Designed for operator deployments with rich telco collaboration experience",
+            "Based on EasyMesh framework",
+            "Embeds advanced technologies and smart network management",
+            "Provides complete mesh coverage for home environments"
+          ],
+          "specifications": {
+            "mesh_standard": "EasyMesh",
+            "purpose": "extend Wi‑Fi coverage, mesh network management"
+          }
+        },
+        {
+          "name": "STB (Android set-top box)",
+          "category": "Home multimedia / Set-Top Box (STB)",
+          "characteristics": [
+            "Next-generation Android-based set-top box",
+            "Provides hardware and software design services for connected home and multiscreen applications",
+            "Recent models integrate voice assistant functionality",
+            "Supports stereo audio modes and voice recognition"
+          ],
+          "specifications": {
+            "platform": "Android",
+            "features": "voice assistant integration, stereo audio modes, voice recognition",
+            "use_cases": "connected home, multiscreen multimedia"
+          }
+        },
+        {
+          "name": "Voice Assistant (brandable)",
+          "category": "Voice assistant / Smart home interface",
+          "characteristics": [
+            "Brandable voice assistant for operators and retail partners",
+            "Provides intuitive voice-based interaction for home devices",
+            "Includes basic voice control and audio call capabilities",
+            "Supports advanced customizable IoT interaction designs per customer"
+          ],
+          "specifications": {
+            "features": "voice control, audio call, customizable IoT integrations",
+            "target_customers": "operators, retail partners"
+          }
+        },
+        {
+          "name": "79GHz R151 Inner-Wheel Blind-Spot Radar",
+          "category": "Automotive blind-spot radar (79 GHz)",
+          "characteristics": [
+            "Designed for large commercial vehicle driving safety",
+            "Detects inner-wheel blind spots and A-pillar blind zones",
+            "Provides BSD (Blind Spot Detection) and LCA (Lane Change Assist) warning functions",
+            "Certified: passed EU UN R151 research/test certification"
+          ],
+          "specifications": {
+            "frequency_band": "79 GHz",
+            "model_reference": "R151",
+            "functions": "inner-wheel blind spot detection, A-pillar blind zone detection, BSD, LCA",
+            "certification": "EU UN R151"
+          }
+        },
+        {
+          "name": "77GHz 360-degree All‑Around Detection Warning Radar",
+          "category": "Automotive ADAS radar (77 GHz)",
+          "characteristics": [
+            "360-degree all-around blind-spot warning radar",
+            "Supports BSD and FCW (Forward Collision Warning) functions",
+            "High-resolution radar to improve driving safety",
+            "Passed multiple national regulatory certifications and product reliability tests"
+          ],
+          "specifications": {
+            "frequency_band": "77 GHz",
+            "coverage": "360-degree",
+            "functions": "blind-spot warning (BSD), forward collision warning (FCW)",
+            "quality": "high-resolution, multi-country regulatory certifications"
+          }
+        },
+        {
+          "name": "3‑in‑1 Vehicle Antenna Box",
+          "category": "Vehicle multi-band antenna / GNSS active antenna",
+          "characteristics": [
+            "Combines LTE antennas and active global navigation satellite system (GNSS) antenna",
+            "Intended for vehicle multi-band antenna, fleet management, vehicle ICT, tracking and navigation",
+            "Robust environmental protection (IP65) and wide operating temperature range"
+          ],
+          "specifications": {
+            "lte_antennas": "2 x 4G LTE antennas",
+            "lte_supported_bands": "698-960 MHz, 1710-2170 MHz, 2300-2690 MHz (full bands)",
+            "gnss_support": "GPS, GLONASS, Galileo, BeiDou",
+            "gnss_type": "active antenna (patch)",
+            "patch_gain": "up to 3.14 dBi",
+            "dimensions_mm": "70 x 70 x 30",
+            "ip_rating": "IP65",
+            "operating_temperature": "-40°C to +85°C",
+            "applications": "vehicle multi-band antenna, fleet management, tracking, navigation"
+          }
+        },
+        {
+          "name": "T‑box / 4G & 5G Intelligent Vehicle System (integrated car unit)",
+          "category": "Vehicle telematics unit / T‑box and intelligent vehicle management system",
+          "characteristics": [
+            "Integrates vehicle head unit (car machine) and radar functions (77/79 GHz mmWave) for real-time driving diagnostics",
+            "Enables collision prevention, abnormal driving behavior detection and scoring",
+            "Supports remote diagnostics and remote firmware/software updates (OTA)",
+            "Supports hierarchical/group vehicle management and fleet statistics",
+            "Provides proactive safety alerts and alarm data analytics for improving driving safety"
+          ],
+          "specifications": {
+            "connectivity": "4G LTE and 5G support (smart EV onboard system)",
+            "radar_integration": "77 GHz / 79 GHz mmWave radar integration",
+            "functions": "real-time driving diagnostics, collision prevention, abnormal-driving detection & scoring, OTA updates, fleet management",
+            "software": "smart vehicle management software for remote diagnostics and fleet analytics"
+          }
+        },
+        {
+          "name": "Smart Vehicle Management Software",
+          "category": "Software (vehicle fleet management / telematics analytics)",
+          "characteristics": [
+            "Remote diagnostics for in-vehicle units and radar systems",
+            "Enables remote updates to repair system anomalies",
+            "Provides hierarchical/group fleet management dashboards and vehicle status statistics",
+            "Performs alarm/data analysis to improve driving safety"
+          ],
+          "specifications": {
+            "features": "remote diagnostics, OTA updates, group/hierarchical fleet stats, proactive alerting, alarm data analytics",
+            "integrations": "T-box devices, 77/79GHz radar systems"
+          }
+        }
+      ],
+      "chunk_index": 0,
+      "chunk_line_count": 1
+    }
+  ],
+  "all_products": [
+    {
+      "name": "5G CPE",
+      "category": "5G Customer Premises Equipment / Integrated Access Device (IAD)",
+      "characteristics": [
+        "Uses 5G New Radio (5G NR) mobile network access",
+        "High-speed, low-latency home integrated access device",
+        "Optimized wireless communication performance",
+        "Provides larger bandwidth and high-speed Ethernet interfaces",
+        "Designed to deliver optimized user experience"
+      ],
+      "specifications": {
+        "interface_type": "IAD (Integrated Access Device)",
+        "wireless_standard": "5G New Radio",
+        "features": "high-speed, low-latency, optimized wireless performance, high-speed Ethernet"
+      }
+    },
+    {
+      "name": "Small Cell",
+      "category": "5G / Small Cell (Open RAN)",
+      "characteristics": [
+        "Built on Open RAN architecture",
+        "Improves indoor/outdoor signal coverage and network capacity",
+        "Designed to enhance customer experience and application performance"
+      ],
+      "specifications": {
+        "architecture": "Open RAN"
+      }
+    },
+    {
+      "name": "FTTx Solution",
+      "category": "Fixed broadband access solutions (FTTx)",
+      "characteristics": [
+        "Provides fiber access solutions for high-speed fixed networks",
+        "Customizable per customer/operator needs to reduce OPEX",
+        "Supports a variety of FTTx technologies"
+      ],
+      "specifications": {
+        "supported_standards": "GPON, XGPON, XGSPON, 10GEPON, NGPON2"
+      }
+    },
+    {
+      "name": "DOCSIS Cable CPE (modem / EMTA / all-in-one Cable Gateway)",
+      "category": "Cable broadband CPE (DOCSIS)",
+      "characteristics": [
+        "Complete DOCSIS 3.0 / 3.1 Cable CPE solutions",
+        "Includes DOCSIS modem, EMTA and all-in-one Cable Gateway variants",
+        "Built-in EasyMesh and cloud analytics",
+        "Integrates latest wireless technologies for home/multi-media use",
+        "Targets multi-gigabit household and SMB multimedia/high-bandwidth applications"
+      ],
+      "specifications": {
+        "docsis_versions": "3.0, 3.1",
+        "ethernet": "up to 2.5 Gbps Ethernet (multi-gigabit capable)",
+        "features": "EasyMesh, cloud analytics, latest wireless tech"
+      }
+    },
+    {
+      "name": "xDSL Integrated Access Device (xDSL IAD)",
+      "category": "xDSL home broadband equipment",
+      "characteristics": [
+        "xDSL access via telephone line",
+        "Integrates Wi‑Fi wireless networking and VoIP",
+        "Offers full-series xDSL integrated access devices for operators"
+      ],
+      "specifications": {
+        "access_technology": "xDSL",
+        "integrations": "Wi‑Fi, VoIP"
+      }
+    },
+    {
+      "name": "Wi‑Fi CPE",
+      "category": "Home Wi‑Fi Customer Premises Equipment",
+      "characteristics": [
+        "Long-term R&D focus on wireless communications",
+        "Leader in home broadband Wi‑Fi CPE",
+        "Integrates wireless and 10 Gbps Ethernet",
+        "Provides multi-gigabit high-speed broadband for multimedia and high-bandwidth applications"
+      ],
+      "specifications": {
+        "ethernet": "10 Gbps Ethernet integration (where applicable)",
+        "capability": "multi-gigabit Wi‑Fi"
+      }
+    },
+    {
+      "name": "Wi‑Fi Extender (Mesh / EasyMesh)",
+      "category": "Wi‑Fi Extender / Mesh solution",
+      "characteristics": [
+        "Designed for operator deployments with rich telco collaboration experience",
+        "Based on EasyMesh framework",
+        "Embeds advanced technologies and smart network management",
+        "Provides complete mesh coverage for home environments"
+      ],
+      "specifications": {
+        "mesh_standard": "EasyMesh",
+        "purpose": "extend Wi‑Fi coverage, mesh network management"
+      }
+    },
+    {
+      "name": "STB (Android set-top box)",
+      "category": "Home multimedia / Set-Top Box (STB)",
+      "characteristics": [
+        "Next-generation Android-based set-top box",
+        "Provides hardware and software design services for connected home and multiscreen applications",
+        "Recent models integrate voice assistant functionality",
+        "Supports stereo audio modes and voice recognition"
+      ],
+      "specifications": {
+        "platform": "Android",
+        "features": "voice assistant integration, stereo audio modes, voice recognition",
+        "use_cases": "connected home, multiscreen multimedia"
+      }
+    },
+    {
+      "name": "Voice Assistant (brandable)",
+      "category": "Voice assistant / Smart home interface",
+      "characteristics": [
+        "Brandable voice assistant for operators and retail partners",
+        "Provides intuitive voice-based interaction for home devices",
+        "Includes basic voice control and audio call capabilities",
+        "Supports advanced customizable IoT interaction designs per customer"
+      ],
+      "specifications": {
+        "features": "voice control, audio call, customizable IoT integrations",
+        "target_customers": "operators, retail partners"
+      }
+    },
+    {
+      "name": "79GHz R151 Inner-Wheel Blind-Spot Radar",
+      "category": "Automotive blind-spot radar (79 GHz)",
+      "characteristics": [
+        "Designed for large commercial vehicle driving safety",
+        "Detects inner-wheel blind spots and A-pillar blind zones",
+        "Provides BSD (Blind Spot Detection) and LCA (Lane Change Assist) warning functions",
+        "Certified: passed EU UN R151 research/test certification"
+      ],
+      "specifications": {
+        "frequency_band": "79 GHz",
+        "model_reference": "R151",
+        "functions": "inner-wheel blind spot detection, A-pillar blind zone detection, BSD, LCA",
+        "certification": "EU UN R151"
+      }
+    },
+    {
+      "name": "77GHz 360-degree All‑Around Detection Warning Radar",
+      "category": "Automotive ADAS radar (77 GHz)",
+      "characteristics": [
+        "360-degree all-around blind-spot warning radar",
+        "Supports BSD and FCW (Forward Collision Warning) functions",
+        "High-resolution radar to improve driving safety",
+        "Passed multiple national regulatory certifications and product reliability tests"
+      ],
+      "specifications": {
+        "frequency_band": "77 GHz",
+        "coverage": "360-degree",
+        "functions": "blind-spot warning (BSD), forward collision warning (FCW)",
+        "quality": "high-resolution, multi-country regulatory certifications"
+      }
+    },
+    {
+      "name": "3‑in‑1 Vehicle Antenna Box",
+      "category": "Vehicle multi-band antenna / GNSS active antenna",
+      "characteristics": [
+        "Combines LTE antennas and active global navigation satellite system (GNSS) antenna",
+        "Intended for vehicle multi-band antenna, fleet management, vehicle ICT, tracking and navigation",
+        "Robust environmental protection (IP65) and wide operating temperature range"
+      ],
+      "specifications": {
+        "lte_antennas": "2 x 4G LTE antennas",
+        "lte_supported_bands": "698-960 MHz, 1710-2170 MHz, 2300-2690 MHz (full bands)",
+        "gnss_support": "GPS, GLONASS, Galileo, BeiDou",
+        "gnss_type": "active antenna (patch)",
+        "patch_gain": "up to 3.14 dBi",
+        "dimensions_mm": "70 x 70 x 30",
+        "ip_rating": "IP65",
+        "operating_temperature": "-40°C to +85°C",
+        "applications": "vehicle multi-band antenna, fleet management, tracking, navigation"
+      }
+    },
+    {
+      "name": "T‑box / 4G & 5G Intelligent Vehicle System (integrated car unit)",
+      "category": "Vehicle telematics unit / T‑box and intelligent vehicle management system",
+      "characteristics": [
+        "Integrates vehicle head unit (car machine) and radar functions (77/79 GHz mmWave) for real-time driving diagnostics",
+        "Enables collision prevention, abnormal driving behavior detection and scoring",
+        "Supports remote diagnostics and remote firmware/software updates (OTA)",
+        "Supports hierarchical/group vehicle management and fleet statistics",
+        "Provides proactive safety alerts and alarm data analytics for improving driving safety"
+      ],
+      "specifications": {
+        "connectivity": "4G LTE and 5G support (smart EV onboard system)",
+        "radar_integration": "77 GHz / 79 GHz mmWave radar integration",
+        "functions": "real-time driving diagnostics, collision prevention, abnormal-driving detection & scoring, OTA updates, fleet management",
+        "software": "smart vehicle management software for remote diagnostics and fleet analytics"
+      }
+    },
+    {
+      "name": "Smart Vehicle Management Software",
+      "category": "Software (vehicle fleet management / telematics analytics)",
+      "characteristics": [
+        "Remote diagnostics for in-vehicle units and radar systems",
+        "Enables remote updates to repair system anomalies",
+        "Provides hierarchical/group fleet management dashboards and vehicle status statistics",
+        "Performs alarm/data analysis to improve driving safety"
+      ],
+      "specifications": {
+        "features": "remote diagnostics, OTA updates, group/hierarchical fleet stats, proactive alerting, alarm data analytics",
+        "integrations": "T-box devices, 77/79GHz radar systems"
+      }
+    }
+  ]
+}

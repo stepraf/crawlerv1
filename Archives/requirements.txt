@@ -1,0 +1,5 @@
+duckduckgo-search
+crawl4ai
+openai
+sqlmodel
+python-dotenv

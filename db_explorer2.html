@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Documents Database Explorer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .file-input-wrapper {
+            margin-top: 15px;
+        }
+
+        input[type="file"] {
+            padding: 8px;
+            border: 2px dashed #3498db;
+            border-radius: 4px;
+            background: #f8f9fa;
+            cursor: pointer;
+        }
+
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            background: #e8f4f8;
+            color: #2980b9;
+            display: none;
+        }
+
+        .status.error {
+            background: #fee;
+            color: #c33;
+        }
+
+        .status.success {
+            background: #efe;
+            color: #3c3;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+
+        .sidebar {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+
+        .content-area {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 16px;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            color: #3498db;
+        }
+
+        .tab.active {
+            color: #3498db;
+            border-bottom-color: #3498db;
+            font-weight: 600;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .refresh-button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .refresh-button:hover {
+            background: #2980b9;
+        }
+
+        .refresh-button:active {
+            background: #21618c;
+        }
+
+        .refresh-button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        .item-list {
+            list-style: none;
+        }
+
+        .item {
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .item:hover {
+            background: #f8f9fa;
+            border-color: #3498db;
+        }
+
+        .item.active {
+            background: #e8f4f8;
+            border-color: #3498db;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .item-url {
+            font-size: 12px;
+            color: #7f8c8d;
+            word-break: break-all;
+        }
+
+        .item-meta {
+            font-size: 11px;
+            color: #95a5a6;
+            margin-top: 5px;
+        }
+
+        .detail-view {
+            display: none;
+        }
+
+        .detail-view.active {
+            display: block;
+        }
+
+        .detail-header {
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .detail-title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .detail-url {
+            color: #3498db;
+            text-decoration: none;
+            word-break: break-all;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .detail-url:hover {
+            text-decoration: underline;
+        }
+
+        .detail-meta {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        .detail-content {
+            margin-top: 20px;
+        }
+
+        .detail-section {
+            margin-bottom: 25px;
+        }
+
+        .detail-section-title {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .detail-text {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .detail-text.markdown {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            white-space: pre-wrap;
+        }
+
+        .detail-text.markdown h1,
+        .detail-text.markdown h2,
+        .detail-text.markdown h3,
+        .detail-text.markdown h4,
+        .detail-text.markdown h5,
+        .detail-text.markdown h6 {
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .detail-text.markdown h1 {
+            font-size: 2em;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 0.3em;
+        }
+
+        .detail-text.markdown h2 {
+            font-size: 1.5em;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 0.3em;
+        }
+
+        .detail-text.markdown h3 {
+            font-size: 1.25em;
+        }
+
+        .detail-text.markdown p {
+            margin-bottom: 1em;
+            line-height: 1.6;
+        }
+
+        .detail-text.markdown ul,
+        .detail-text.markdown ol {
+            margin-bottom: 1em;
+            padding-left: 2em;
+        }
+
+        .detail-text.markdown li {
+            margin-bottom: 0.5em;
+        }
+
+        .detail-text.markdown code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .detail-text.markdown pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 1em;
+        }
+
+        .detail-text.markdown pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .detail-text.markdown blockquote {
+            border-left: 4px solid #3498db;
+            padding-left: 1em;
+            margin-left: 0;
+            color: #666;
+            font-style: italic;
+        }
+
+        .detail-text.markdown a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .detail-text.markdown a:hover {
+            text-decoration: underline;
+        }
+
+        .detail-text.markdown table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 1em;
+        }
+
+        .detail-text.markdown th,
+        .detail-text.markdown td {
+            border: 1px solid #e0e0e0;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        .detail-text.markdown th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .detail-text.markdown hr {
+            border: none;
+            border-top: 2px solid #e0e0e0;
+            margin: 2em 0;
+        }
+
+        .detail-text.markdown strong {
+            font-weight: 600;
+        }
+
+        .detail-text.markdown em {
+            font-style: italic;
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #95a5a6;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Research Documents Database Explorer</h1>
+            <div class="file-input-wrapper">
+                <input type="file" id="dbFile" accept=".db" />
+            </div>
+            <div class="status" id="status"></div>
+        </header>
+
+        <div class="main-content" id="mainContent" style="display: none;">
+            <div class="sidebar">
+                <div class="tabs">
+                    <button class="tab active" data-table="crawledpage">Crawled Pages</button>
+                    <button class="tab" data-table="researchdocument">Research Documents</button>
+                </div>
+                <input type="text" class="search-box" id="searchBox" placeholder="Search by title or URL...">
+                <button class="refresh-button" id="refreshButton" title="Refresh data from database">
+                    <span>🔄</span>
+                    <span>Refresh</span>
+                </button>
+                <div class="stats" id="stats"></div>
+                <ul class="item-list" id="itemList"></ul>
+            </div>
+
+            <div class="content-area">
+                <div class="detail-view active" id="emptyView">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📄</div>
+                        <p>Select an item from the list to view details</p>
+                    </div>
+                </div>
+                <div class="detail-view" id="detailView">
+                    <div class="detail-header">
+                        <div class="detail-title" id="detailTitle"></div>
+                        <a href="#" class="detail-url" id="detailUrl" target="_blank"></a>
+                        <div class="detail-meta" id="detailMeta"></div>
+                    </div>
+                    <div class="detail-content" id="detailContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let db = null;
+        let currentTable = 'crawledpage';
+        let allItems = [];
+        let filteredItems = [];
+        let dbLoadMethod = null; // 'auto' or 'manual'
+        let dbFileName = 'research_documents.db'; // default for auto-load
+        let lastLoadedFile = null; // Store file reference for manual loads
+
+        // Initialize sql.js
+        async function initSQL() {
+            const SQL = await initSqlJs({
+                locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/${file}`
+            });
+            return SQL;
+        }
+
+        let SQL = null;
+
+        // Load database file
+        document.getElementById('dbFile').addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            await loadDatabaseFromFile(file);
+        });
+
+        async function loadDatabaseFromFile(file, preserveTable = false) {
+            showStatus('Loading database...', 'info');
+
+            try {
+                if (!SQL) {
+                    SQL = await initSQL();
+                }
+
+                // Force a fresh read by creating a new array buffer
+                const arrayBuffer = await file.arrayBuffer();
+                const uint8Array = new Uint8Array(arrayBuffer);
+                
+                // Close previous database if it exists
+                if (db) {
+                    db.close();
+                }
+                
+                db = new SQL.Database(uint8Array);
+                dbLoadMethod = 'manual';
+                dbFileName = file.name;
+                lastLoadedFile = file; // Store file reference
+
+                showStatus('Database loaded successfully!', 'success');
+                document.getElementById('mainContent').style.display = 'grid';
+                
+                if (preserveTable) {
+                    loadTable(currentTable);
+                } else {
+                    loadTable('crawledpage');
+                }
+            } catch (error) {
+                showStatus('Error loading database: ' + error.message, 'error');
+                console.error(error);
+            }
+        }
+
+        async function loadDatabaseFromUrl(url) {
+            showStatus('Loading database...', 'info');
+
+            try {
+                // Use cache: 'no-store' to ensure we get the latest file from disk
+                // Also add a timestamp to the URL to bypass any browser caching
+                const urlWithCacheBust = url.includes('?') ? url.split('?')[0] + '?t=' + Date.now() : url + '?t=' + Date.now();
+                const response = await fetch(urlWithCacheBust, {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache'
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch database file');
+                }
+                const arrayBuffer = await response.arrayBuffer();
+                if (!SQL) {
+                    SQL = await initSQL();
+                }
+                const uint8Array = new Uint8Array(arrayBuffer);
+                
+                // Close previous database if it exists
+                if (db) {
+                    db.close();
+                }
+                
+                db = new SQL.Database(uint8Array);
+                dbLoadMethod = 'auto';
+                // Store the base URL without the cache busting parameter
+                dbFileName = url.includes('?') ? url.split('?')[0] : url;
+
+                showStatus('Database loaded successfully!', 'success');
+                document.getElementById('mainContent').style.display = 'grid';
+                loadTable(currentTable);
+            } catch (error) {
+                showStatus('Error loading database: ' + error.message, 'error');
+                console.error(error);
+                throw error;
+            }
+        }
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                currentTable = this.dataset.table;
+                loadTable(currentTable);
+            });
+        });
+
+        // Search functionality
+        document.getElementById('searchBox').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            filterItems(query);
+        });
+
+        // Refresh button functionality
+        document.getElementById('refreshButton').addEventListener('click', async function() {
+            if (!db) {
+                showStatus('No database loaded', 'error');
+                return;
+            }
+            
+            const button = this;
+            const originalText = button.innerHTML;
+            button.disabled = true;
+            button.innerHTML = '<span>⏳</span><span>Refreshing...</span>';
+            
+            try {
+                // Reload the database from disk to get latest data
+                if (dbLoadMethod === 'auto') {
+                    // Reload from the same URL with cache busting and no-cache headers
+                    const url = dbFileName.includes('?') ? dbFileName.split('?')[0] : dbFileName;
+                    await loadDatabaseFromUrl(url + '?t=' + Date.now());
+                } else if (dbLoadMethod === 'manual') {
+                    // For manually loaded files, we need to re-read from the file input
+                    // However, browsers cache file reads, so if the file on disk changed,
+                    // we need the user to re-select it. But we'll try to re-read anyway.
+                    const fileInput = document.getElementById('dbFile');
+                    if (fileInput.files && fileInput.files.length > 0) {
+                        // Re-read the file from the input
+                        const file = fileInput.files[0];
+                        await loadDatabaseFromFile(file, true); // preserve current table
+                    } else if (lastLoadedFile) {
+                        // Try to re-read the stored file reference
+                        // Note: File objects are snapshots, so if the file on disk changed,
+                        // this won't reflect the change. User needs to re-select the file.
+                        await loadDatabaseFromFile(lastLoadedFile, true);
+                        showStatus('Note: If the file was updated on disk, please re-select it manually', 'info');
+                    } else {
+                        showStatus('Please reload the database file manually to get the latest data', 'info');
+                        loadTable(currentTable); // At least refresh the current view
+                    }
+                } else {
+                    // Fallback: just reload current table
+                    loadTable(currentTable);
+                }
+                showStatus('Data refreshed successfully!', 'success');
+            } catch (error) {
+                showStatus('Error refreshing data: ' + error.message, 'error');
+                console.error(error);
+                // Try to at least reload current table
+                try {
+                    loadTable(currentTable);
+                } catch (e) {
+                    console.error('Failed to reload table:', e);
+                }
+            } finally {
+                setTimeout(() => {
+                    button.disabled = false;
+                    button.innerHTML = originalText;
+                }, 500);
+            }
+        });
+
+        function loadTable(tableName) {
+            if (!db) return;
+
+            try {
+                let query = '';
+                if (tableName === 'crawledpage') {
+                    query = 'SELECT id, base_url, url, title, markdown, html, created_at FROM crawledpage ORDER BY created_at DESC';
+                } else if (tableName === 'researchdocument') {
+                    query = 'SELECT id, query, url, title, full_markdown_content, ai_summary, key_insights, created_at FROM researchdocument ORDER BY created_at DESC';
+                }
+
+                const result = db.exec(query);
+                if (result.length === 0) {
+                    allItems = [];
+                    filteredItems = [];
+                    renderItems();
+                    updateStats();
+                    return;
+                }
+
+                const columns = result[0].columns;
+                const values = result[0].values;
+
+                allItems = values.map(row => {
+                    const item = {};
+                    columns.forEach((col, idx) => {
+                        item[col] = row[idx];
+                    });
+                    return item;
+                });
+
+                filteredItems = [...allItems];
+                renderItems();
+                updateStats();
+                document.getElementById('searchBox').value = '';
+            } catch (error) {
+                showStatus('Error loading table: ' + error.message, 'error');
+                console.error(error);
+            }
+        }
+
+        function filterItems(query) {
+            if (!query) {
+                filteredItems = [...allItems];
+            } else {
+                filteredItems = allItems.filter(item => {
+                    const title = (item.title || '').toLowerCase();
+                    const url = (item.url || '').toLowerCase();
+                    return title.includes(query) || url.includes(query);
+                });
+            }
+            renderItems();
+            updateStats();
+        }
+
+        function renderItems() {
+            const list = document.getElementById('itemList');
+            list.innerHTML = '';
+
+            if (filteredItems.length === 0) {
+                list.innerHTML = '<div class="empty-state"><p>No items found</p></div>';
+                return;
+            }
+
+            filteredItems.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.className = 'item';
+                li.dataset.index = index;
+
+                const title = item.title || 'Untitled';
+                const url = item.url || '';
+                const date = item.created_at ? new Date(item.created_at).toLocaleDateString() : '';
+
+                li.innerHTML = `
+                    <div class="item-title">${escapeHtml(title)}</div>
+                    <div class="item-url">${escapeHtml(url)}</div>
+                    <div class="item-meta">${date}</div>
+                `;
+
+                li.addEventListener('click', () => showDetail(item));
+                list.appendChild(li);
+            });
+        }
+
+        function showDetail(item) {
+            // Update active item
+            document.querySelectorAll('.item').forEach(el => el.classList.remove('active'));
+            const clickedItem = document.querySelector(`[data-index="${filteredItems.indexOf(item)}"]`);
+            if (clickedItem) clickedItem.classList.add('active');
+
+            // Show detail view
+            document.getElementById('emptyView').classList.remove('active');
+            document.getElementById('detailView').classList.add('active');
+
+            // Populate detail view
+            document.getElementById('detailTitle').textContent = item.title || 'Untitled';
+            const urlEl = document.getElementById('detailUrl');
+            urlEl.href = item.url || '#';
+            urlEl.textContent = item.url || '';
+
+            // Build meta info
+            let meta = [];
+            if (item.created_at) {
+                meta.push(`Created: ${new Date(item.created_at).toLocaleString()}`);
+            }
+            if (item.base_url) {
+                meta.push(`Base URL: ${item.base_url}`);
+            }
+            if (item.query) {
+                meta.push(`Query: ${item.query}`);
+            }
+            document.getElementById('detailMeta').textContent = meta.join(' • ');
+
+            // Build content sections
+            const contentEl = document.getElementById('detailContent');
+            contentEl.innerHTML = '';
+
+            if (currentTable === 'crawledpage') {
+                if (item.markdown) {
+                    const section = createSection('Markdown Content', item.markdown, 'markdown');
+                    contentEl.appendChild(section);
+                }
+                if (item.html) {
+                    const section = createSection('HTML Content', item.html, 'html');
+                    contentEl.appendChild(section);
+                }
+            } else if (currentTable === 'researchdocument') {
+                if (item.full_markdown_content) {
+                    const section = createSection('Full Content', item.full_markdown_content, 'markdown');
+                    contentEl.appendChild(section);
+                }
+                if (item.ai_summary) {
+                    const section = createSection('AI Summary', item.ai_summary, 'markdown');
+                    contentEl.appendChild(section);
+                }
+                if (item.key_insights) {
+                    let insights = item.key_insights;
+                    try {
+                        insights = JSON.parse(insights);
+                        if (Array.isArray(insights)) {
+                            insights = insights.join('\n• ');
+                        }
+                    } catch (e) {
+                        // Not JSON, use as-is
+                    }
+                    const section = createSection('Key Insights', insights, 'markdown');
+                    contentEl.appendChild(section);
+                }
+            }
+        }
+
+        function createSection(title, content, type = 'text') {
+            const section = document.createElement('div');
+            section.className = 'detail-section';
+
+            const titleEl = document.createElement('div');
+            titleEl.className = 'detail-section-title';
+            titleEl.textContent = title;
+
+            const contentEl = document.createElement('div');
+            contentEl.className = `detail-text ${type}`;
+            
+            if (type === 'markdown') {
+                // Display markdown as plain text with line breaks preserved
+                contentEl.textContent = content;
+            } else if (type === 'html') {
+                // Render HTML content directly
+                contentEl.innerHTML = content;
+            } else {
+                // Plain text
+                contentEl.textContent = content;
+            }
+
+            section.appendChild(titleEl);
+            section.appendChild(contentEl);
+            return section;
+        }
+
+        function updateStats() {
+            const statsEl = document.getElementById('stats');
+            statsEl.innerHTML = `
+                <div class="stat">
+                    <div class="stat-label">Total Items</div>
+                    <div class="stat-value">${allItems.length}</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Filtered</div>
+                    <div class="stat-value">${filteredItems.length}</div>
+                </div>
+            `;
+        }
+
+        function showStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+            statusEl.style.display = 'block';
+
+            if (type === 'success') {
+                setTimeout(() => {
+                    statusEl.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Auto-load database if it's in the same directory
+        window.addEventListener('load', async function() {
+            // Try to load the database automatically
+            try {
+                await loadDatabaseFromUrl('research_documents.db');
+            } catch (error) {
+                // Database not found or CORS issue, user will need to load manually
+                showStatus('Please select the database file to load', 'info');
+            }
+        });
+    </script>
+</body>
+</html>
+
