@@ -1,7 +1,11 @@
 # Core dependencies for site_crawler.py and generate_markdown.py
 
-# Web crawling
-crawl4ai>=0.3.0
+# Web crawling / search
+crawl4ai>=0.7.7
+ddgs>=6.2.4
+
+# OpenAI / Azure OpenAI (LangGraph script)
+openai>=1.37.0
 
 # Database ORM
 sqlmodel>=0.0.14
