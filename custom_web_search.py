@@ -17,6 +17,7 @@ import time
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Iterable, List, Dict, Optional
+from urllib.parse import urlparse
 
 from ddgs import DDGS
 from sqlmodel import SQLModel, Field, Session, create_engine, select
@@ -165,6 +166,16 @@ def _truncate(content: str, max_chars: int) -> str:
     return content[:max_chars] + "\n\n[Content truncated for analysis]"
 
 
+def _is_pdf_url(url: str) -> bool:
+    """Check if a URL points to a PDF file."""
+    if not url:
+        return False
+    parsed = urlparse(url)
+    path = parsed.path.lower()
+    # Check if URL ends with .pdf or has .pdf in the path
+    return path.endswith('.pdf') or '.pdf?' in path or '.pdf#' in path
+
+
 async def _search_duckduckgo_async(
     query: str,
     max_results: int = 6,
@@ -218,11 +229,25 @@ async def _scrape_urls_async(
     if not unique_urls:
         return []
 
+    # Filter out PDF URLs
+    pdf_urls = [url for url in unique_urls if _is_pdf_url(url)]
+    non_pdf_urls = [url for url in unique_urls if not _is_pdf_url(url)]
+    
+    if pdf_urls:
+        logger.info("Filtered out %s PDF URL(s): %s", len(pdf_urls), ", ".join(pdf_urls))
+        print(f"[web_search] Filtered out {len(pdf_urls)} PDF URL(s) (skipping PDFs)")
+        for pdf_url in pdf_urls:
+            print(f"  [skipped PDF] {pdf_url}")
+    
+    if not non_pdf_urls:
+        logger.warning("All URLs were PDFs and were filtered out")
+        return []
+
     pages: List[SearchPage] = []
 
     # First try to satisfy from cache without crawling
     with Session(cache_engine) as session:
-        for url in unique_urls:
+        for url in non_pdf_urls:
             cached = session.exec(
                 select(CachedPage).where(CachedPage.url == url)
             ).first()
@@ -236,50 +261,67 @@ async def _scrape_urls_async(
                 )
 
         cached_urls = {p.url for p in pages}
-        urls_to_crawl = [u for u in unique_urls if u not in cached_urls]
+        urls_to_crawl = [u for u in non_pdf_urls if u not in cached_urls]
 
     if urls_to_crawl:
         config = _create_stealth_config()
+        # Limit concurrency to avoid too many simultaneous browser instances
+        max_concurrent = 3
+        timeout_per_url = 60.0  # 60 seconds timeout per URL
+        semaphore = asyncio.Semaphore(max_concurrent)
+        
         async with AsyncWebCrawler(config=config) as crawler:
             async def _scrape_single(url: str) -> None:
-                try:
-                    result = await crawler.arun(url=url)
-                    if not result:
-                        return
-                    markdown = getattr(result, "markdown", "") or ""
-                    if not markdown.strip():
-                        return
-                    metadata = getattr(result, "metadata", {}) or {}
-                    title = getattr(result, "title", "") or metadata.get("title", "") or url
-                    cleaned = _clean_markdown(markdown)
-                    truncated = _truncate(cleaned, max_chars_per_page)
-                    page = SearchPage(url=url, title=title, content=truncated)
-                    pages.append(page)
+                async with semaphore:  # Limit concurrent requests
+                    try:
+                        print(f"[web_search] Starting crawl: {url}")
+                        result = await asyncio.wait_for(
+                            crawler.arun(url=url),
+                            timeout=timeout_per_url
+                        )
+                        if not result:
+                            print(f"[web_search] No result for: {url}")
+                            return
+                        markdown = getattr(result, "markdown", "") or ""
+                        if not markdown.strip():
+                            print(f"[web_search] Empty markdown for: {url}")
+                            return
+                        metadata = getattr(result, "metadata", {}) or {}
+                        title = getattr(result, "title", "") or metadata.get("title", "") or url
+                        cleaned = _clean_markdown(markdown)
+                        truncated = _truncate(cleaned, max_chars_per_page)
+                        page = SearchPage(url=url, title=title, content=truncated)
+                        pages.append(page)
+                        print(f"[web_search] ✓ Successfully crawled: {url}")
 
-                    # Store/refresh in cache
-                    with Session(cache_engine) as session:
-                        existing = session.exec(
-                            select(CachedPage).where(CachedPage.url == url)
-                        ).first()
-                        if existing:
-                            existing.title = page.title
-                            existing.content = page.content
-                        else:
-                            session.add(
-                                CachedPage(
-                                    url=url,
-                                    title=page.title,
-                                    content=page.content,
+                        # Store/refresh in cache
+                        with Session(cache_engine) as session:
+                            existing = session.exec(
+                                select(CachedPage).where(CachedPage.url == url)
+                            ).first()
+                            if existing:
+                                existing.title = page.title
+                                existing.content = page.content
+                            else:
+                                session.add(
+                                    CachedPage(
+                                        url=url,
+                                        title=page.title,
+                                        content=page.content,
+                                    )
                                 )
-                            )
-                        session.commit()
-                except Exception as exc:  # pragma: no cover - network dependency
-                    logger.warning("Scraping failed for %s: %s", url, exc)
+                            session.commit()
+                    except asyncio.TimeoutError:
+                        logger.warning("Scraping timed out after %s seconds for %s", timeout_per_url, url)
+                        print(f"[web_search] ⚠ Timeout ({timeout_per_url}s) for: {url}")
+                    except Exception as exc:  # pragma: no cover - network dependency
+                        logger.warning("Scraping failed for %s: %s", url, exc)
+                        print(f"[web_search] ⚠ Error for {url}: {exc}")
 
             tasks = [asyncio.create_task(_scrape_single(url)) for url in urls_to_crawl]
             await asyncio.gather(*tasks)
 
-    logger.info("Successfully scraped %s/%s URLs", len(pages), len(unique_urls))
+    logger.info("Successfully scraped %s/%s URLs (filtered %s PDFs)", len(pages), len(non_pdf_urls), len(pdf_urls))
 
     if pages:
         print(f"[web_search] Crawled {len(pages)}/{len(unique_urls)} pages (including cache hits):")
